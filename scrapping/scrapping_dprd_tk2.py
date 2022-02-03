@@ -780,7 +780,6 @@ class get_dpr_tk2():
                 self.failed_list.append("aceh_baratbesar failed..\n\n")
         except Exception as e:
             self.error_desc.append(e)
-            #self.failed_list.append("\n")
             self.failed_list.append("aceh_baratbesar failed..\n\n")
 
 
@@ -799,7 +798,6 @@ class get_dpr_tk2():
                 self.failed_list.append("aceh_jaya failed..\n\n")
         except Exception as e:
             self.error_desc.append(e)
-            #self.failed_list.append("\n")
             self.failed_list.append("aceh_jaya failed..\n\n")
 
 
@@ -855,7 +853,6 @@ class get_dpr_tk2():
                 self.failed_list.append("aceh_tamiang failed..\n\n")
         except Exception as e:
             self.error_desc.append(e)
-            #self.failed_list.append("\n")
             self.failed_list.append("aceh_tamiang failed..\n\n")
 
         
@@ -6859,7 +6856,6 @@ class get_dpr_tk2():
         self.pangandaran_kabupaten()
         self.purwakarta_kabupaten()
         self.subang_kabupaten()
-        self.get_nama_sukabumi()
         self.sukabumi_kabupaten()
         self.sumedang_kabupaten()
         self.tasikmalaya_kabupaten()

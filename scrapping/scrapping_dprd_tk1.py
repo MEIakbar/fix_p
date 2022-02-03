@@ -141,7 +141,6 @@ class get_dpr_tk1():
     @classmethod
     def load_config_json(cls, json_path):
         auth_json = cls.load_config(json_path)
-
         return cls(*cls.parse_config(auth_json))
 
 
@@ -194,7 +193,6 @@ class get_dpr_tk1():
                 self.failed_list.append("get_aceh failed..\n\n")    
         except Exception as e:
             self.error_desc.append(e)
-            #self.failed_list.append("\n")
             self.failed_list.append("get_aceh failed..\n\n")
 
 
@@ -211,7 +209,6 @@ class get_dpr_tk1():
                 self.failed_list.append("get_sumut failed..\n\n")    
         except Exception as e:
             self.error_desc.append(e)
-            #self.failed_list.append("\n")
             self.failed_list.append("get_sumut failed..\n\n")
 
 
@@ -239,7 +236,6 @@ class get_dpr_tk1():
                 self.failed_list.append("get_sumbar failed..\n\n")    
         except Exception as e:
             self.error_desc.append(e)
-            #self.failed_list.append("\n")
             self.failed_list.append("get_sumbar failed..\n\n")
 
 
@@ -248,7 +244,6 @@ class get_dpr_tk1():
         try:
             nama_riau = []
             fraksi_riau = []
-
             urls = [self.url_riau1, self.url_riau2, self.url_riau3, self.url_riau4, 
                     self.url_riau5, self.url_riau6, self.url_riau7, self.url_riau8]
             for url in urls:
@@ -268,7 +263,6 @@ class get_dpr_tk1():
                 self.failed_list.append("get_riau failed..\n\n")    
         except Exception as e:
             self.error_desc.append(e)
-            #self.failed_list.append("\n")
             self.failed_list.append("get_riau failed..\n\n")
 
 
@@ -285,7 +279,6 @@ class get_dpr_tk1():
                 self.failed_list.append("get_kepri failed..\n\n")    
         except Exception as e:
             self.error_desc.append(e)
-            #self.failed_list.append("\n")
             self.failed_list.append("get_kepri failed..\n\n")
 
 
@@ -297,7 +290,6 @@ class get_dpr_tk1():
             spans = soup.find_all('div', {"class":"home-popular-project dewan"})
             for x in spans[0].find_all('a', href=True):
                 list_link.append(x['href'])
-
             url = list_link[-1]
             sop = self.get_data(self.url_jambi)
             list_link = list_link[:-2]
@@ -306,7 +298,6 @@ class get_dpr_tk1():
                 list_link.append(x['href'])
             list_link = list_link[:-2]
             list_link = list(set(list_link))
-
             list_df = [] 
             list_name = []
             for url in tqdm(list_link[:-2]):
@@ -319,13 +310,11 @@ class get_dpr_tk1():
                 except:
                     nama = url.split("/")[-1].replace("-", " ")
                     list_name.append(nama)
-            
             df = pd.concat(list_df)
             df2 = pd.DataFrame.from_dict({"Nama" : list_name})
             df2["Deskripsi"] = "No Data"
             df = pd.concat([df, df2]).reset_index(drop=True)
             df = df.fillna("No Data")
-
             if df.shape[0] > 5:
                 df.to_csv("./scrapping/result/dprd_tk1/dprd_jambi.csv", index=False)
                 self.success_list.append("get_jambi success..\n")
@@ -335,7 +324,6 @@ class get_dpr_tk1():
                 self.failed_list.append("get_jambi failed..\n\n")    
         except Exception as e:
             self.error_desc.append(e)
-            #self.failed_list.append("\n")
             self.failed_list.append("get_jambi failed..\n\n")
 
 
@@ -344,7 +332,6 @@ class get_dpr_tk1():
         try:
             df = pd.read_html(self.url_bengkulu)[5]
             df["Nama"] = df["Nama Anggota"]
-
             if df.shape[0] > 5:
                 df.to_csv("./scrapping/result/dprd_tk1/dprd_bengkulu.csv", index=False)
                 self.success_list.append("get_bengkulu success..\n")
@@ -354,7 +341,6 @@ class get_dpr_tk1():
                 self.failed_list.append("get_bengkulu failed..\n\n")    
         except Exception as e:
             self.error_desc.append(e)
-            #self.failed_list.append("\n")
             self.failed_list.append("get_bengkulu failed..\n\n")    
 
 
@@ -365,7 +351,6 @@ class get_dpr_tk1():
                     self.url_sumsel6, self.url_sumsel7, self.url_sumsel8, self.url_sumsel9]
             name_list = []
             deskripsi_list = []
-
             for url in tqdm(urls):
                 soup = self.get_data(url)
                 spans = soup.find_all('div', {"class":"member-name"})
@@ -385,7 +370,6 @@ class get_dpr_tk1():
                 self.failed_list.append("get_sumsel failed..\n\n")    
         except Exception as e:
             self.error_desc.append(e)
-            #self.failed_list.append("\n")
             self.failed_list.append("get_sumsel failed..\n\n")
 
 
@@ -403,7 +387,6 @@ class get_dpr_tk1():
                 self.failed_list.append("get_bengkulu failed..\n\n")    
         except Exception as e:
             self.error_desc.append(e)
-            #self.failed_list.append("\n")
             self.failed_list.append("get_bengkulu failed..\n\n")    
 
 
@@ -419,10 +402,8 @@ class get_dpr_tk1():
                 for s in spans:
                     for x in s.find_all('a', href=True):
                         list_link.append(x['href'])
-
             Nama_list = []
             Deskripsi_list = []
-
             for link in tqdm(list_link):
                 temp_list = []
                 Nama_list.append(link.split("/")[-1])
@@ -435,7 +416,6 @@ class get_dpr_tk1():
                 except:
                     Deskripsi_list.append("No Data")
                     continue
-            
             x_list = []
             x_failed = []
             for link in tqdm(list_link):
@@ -449,27 +429,22 @@ class get_dpr_tk1():
                         if "\n" in ele_text:
                             continue
                         else:
-                
                             x = self.lapung_prepro(ele_text)
                             temp_list.append(x)
                 except:
                     x_failed.append(link)
                     continue
                 x_list.append(temp_list)
-
             nama_list = []
             ttl_list = []
             for idx in x_list:
                 nama_list.append(idx[0])
                 ttl_list.append(idx[1])
-
             for child in x_failed:
                 nama_list.append(child.split("/")[-1].replace("-", " "))
                 ttl_list.append("-")
-
             df = pd.DataFrame.from_dict({"Nama" : nama_list,
                             "Tempat dan tanggal lahir" : ttl_list})
-
             if df.shape[0] > 5:
                 df.to_csv("./scrapping/result/dprd_tk1/dprd_lampung.csv", index=False)
                 self.success_list.append("get_lampung success..\n")
@@ -479,7 +454,6 @@ class get_dpr_tk1():
                 self.failed_list.append("get_lampung failed..\n\n")    
         except Exception as e:
             self.error_desc.append(e)
-            #self.failed_list.append("\n")
             self.failed_list.append("get_lampung failed..\n\n")
 
     
@@ -504,7 +478,6 @@ class get_dpr_tk1():
                 self.failed_list.append("get_sulut failed..\n\n")    
         except Exception as e:
             self.error_desc.append(e)
-            #self.failed_list.append("\n")
             self.failed_list.append("get_sulut failed..\n\n")    
 
 
@@ -513,7 +486,6 @@ class get_dpr_tk1():
         try:
             urls = [self.url_gorontalo1, self.url_gorontalo2, self.url_gorontalo3, self.url_gorontalo4, 
                     self.url_gorontalo5, self.url_gorontalo6, self.url_gorontalo7, self.url_gorontalo8]
-            
             list_nama = []
             for url in urls:
                 d = str(self.get_data(url)).split("figcaption")
@@ -533,7 +505,6 @@ class get_dpr_tk1():
                 self.failed_list.append("get_sulut failed..\n\n")    
         except Exception as e:
             self.error_desc.append(e)
-            #self.failed_list.append("\n")
             self.failed_list.append("get_sulut failed..\n\n")
 
 
@@ -556,7 +527,6 @@ class get_dpr_tk1():
                 self.failed_list.append("get_sulteng failed..\n\n")    
         except Exception as e:
             self.error_desc.append(e)
-            #self.failed_list.append("\n")
             self.failed_list.append("get_sulteng failed..\n\n")
 
 
@@ -569,7 +539,6 @@ class get_dpr_tk1():
                 self.get_data(url)
         except Exception as e:
             self.error_desc.append(e)
-            #self.failed_list.append("\n")
             self.failed_list.append("get_sulbar failed..\n\n")
 
 
@@ -592,6 +561,7 @@ class get_dpr_tk1():
                 df.columns = new_header
                 li_df.append(df)
             df = pd.concat(li_df)
+            df = df.rename(columns={"Nama Lengkap":"Nama"})
             if df.shape[0] > 5:
                 df.to_csv("./scrapping/result/dprd_tk1/dprd_sulsel.csv", index=False)
                 self.success_list.append("get_sulsel success..\n")
@@ -601,7 +571,6 @@ class get_dpr_tk1():
                 self.failed_list.append("get_sulsel failed..\n\n")    
         except Exception as e:
             self.error_desc.append(e)
-            #self.failed_list.append("\n")
             self.failed_list.append("get_sulsel failed..\n\n")
 
 
@@ -618,7 +587,6 @@ class get_dpr_tk1():
                 self.failed_list.append("get_sulsel failed..\n\n")
         except Exception as e:
             self.error_desc.append(e)
-            #self.failed_list.append("\n")
             self.failed_list.append("get_sulbar failed..\n\n")
 
 
@@ -626,6 +594,7 @@ class get_dpr_tk1():
         print("papua barat....\n")
         try:
             df = pd.read_html(self.url_papuabarat)[5]
+            df = df.rename(columns={"Nama Anggota":"Nama"})
             if df.shape[0] > 5:
                 df.to_csv("./scrapping/result/dprd_tk1/dprd_papuabarat.csv", index=False)
                 self.success_list.append("get_papuabarat success..\n")
@@ -635,7 +604,6 @@ class get_dpr_tk1():
                 self.failed_list.append("get_papuabarat failed..\n\n")
         except Exception as e:
             self.error_desc.append(e)
-            #self.failed_list.append("\n")
             self.failed_list.append("get_papuabarat failed..\n\n")
 
 
@@ -663,7 +631,6 @@ class get_dpr_tk1():
                 self.failed_list.append("get_papua failed..\n\n")
         except Exception as e:
             self.error_desc.append(e)
-            #self.failed_list.append("\n")
             self.failed_list.append("get_papua failed..\n\n")
 
 
@@ -671,6 +638,7 @@ class get_dpr_tk1():
         print("bali....\n")
         try:
             df = pd.read_html(self.url_bali)[6]
+            df = df.rename(columns={"Nama Anggota":"Nama"})
             if df.shape[0] > 5:
                 df.to_csv("./scrapping/result/dprd_tk1/dprd_bali.csv", index=False)
                 self.success_list.append("get_bali success..\n")
@@ -680,7 +648,6 @@ class get_dpr_tk1():
                 self.failed_list.append("get_bali failed..\n\n")
         except Exception as e:
             self.error_desc.append(e)
-            #self.failed_list.append("\n")
             self.failed_list.append("get_bali failed..\n\n")
 
 
@@ -688,6 +655,7 @@ class get_dpr_tk1():
         print("NTB....\n")
         try:
             df = pd.read_html(self.url_ntb)[8]
+            df = df.rename(columns={"Nama Anggota":"Nama"})
             if df.shape[0] > 5:
                 df.to_csv("./scrapping/result/dprd_tk1/dprd_ntb.csv", index=False)
                 self.success_list.append("get_ntb success..\n")
@@ -697,7 +665,6 @@ class get_dpr_tk1():
                 self.failed_list.append("get_ntb failed..\n\n")
         except Exception as e:
             self.error_desc.append(e)
-            #self.failed_list.append("\n")
             self.failed_list.append("get_ntb failed..\n\n")
 
 
@@ -705,6 +672,7 @@ class get_dpr_tk1():
         print("NTT....\n")
         try:
             df = pd.read_html(self.url_ntt)[8]
+            df = df.rename(columns={"Nama Anggota":"Nama"})
             if df.shape[0] > 5:
                 df.to_csv("./scrapping/result/dprd_tk1/dprd_ntt.csv", index=False)
                 self.success_list.append("get_ntt success..\n")
@@ -714,7 +682,6 @@ class get_dpr_tk1():
                 self.failed_list.append("get_ntt failed..\n\n")
         except Exception as e:
             self.error_desc.append(e)
-            #self.failed_list.append("\n")
             self.failed_list.append("get_ntt failed..\n\n")
 
 
@@ -722,6 +689,7 @@ class get_dpr_tk1():
         print("maluku utara....\n")
         try:
             df = pd.read_html(self.url_malukuutara)[5]
+            df = df.rename(columns={"Nama Anggota":"Nama"})
             if df.shape[0] > 5:
                 df.to_csv("./scrapping/result/dprd_tk1/dprd_maluku_utara.csv", index=False)
                 self.success_list.append("get_malukuutara success..\n")
@@ -731,7 +699,6 @@ class get_dpr_tk1():
                 self.failed_list.append("get_malukuutara failed..\n\n")
         except Exception as e:
             self.error_desc.append(e)
-            #self.failed_list.append("\n")
             self.failed_list.append("get_malukuutara failed..\n\n")
 
 
@@ -739,6 +706,7 @@ class get_dpr_tk1():
         print("maluku....\n")
         try:
             df = pd.read_html(self.url_maluku)[2][1:]
+            df = df.rename(columns={"Anggota":"Nama"})
             if df.shape[0] > 5:
                 df.to_csv("./scrapping/result/dprd_tk1/dprd_maluku.csv", index=False)
                 self.success_list.append("get_maluku success..\n")
@@ -748,7 +716,6 @@ class get_dpr_tk1():
                 self.failed_list.append("get_maluku failed..\n\n")
         except Exception as e:
             self.error_desc.append(e)
-            #self.failed_list.append("\n")
             self.failed_list.append("get_maluku failed..\n\n")
 
 
@@ -764,8 +731,7 @@ class get_dpr_tk1():
                 self.error_desc.append("df.shape[0] < 5\n")
                 self.failed_list.append("get_kalbar failed..\n\n")
         except Exception as e:
-            self.error_desc.append(e)
-            #self.failed_list.append("\n")
+            self.error_desc.append(e)            
             self.failed_list.append("get_kalbar failed..\n\n")
 
     
@@ -776,7 +742,6 @@ class get_dpr_tk1():
             list_df = []
             for url in urls:
                 list_df.append(pd.read_html(url))
-
             a_list = []
             b_list = []
             for df_idx in list_df:
@@ -788,13 +753,11 @@ class get_dpr_tk1():
             df_nama = pd.concat(a_list)
             df_nama = df_nama.rename(columns={1 : "Nama"})
             df_nama = df_nama[["Nama"]].reset_index(drop=True)
-
             df_posisi = pd.concat(b_list)
             df_posisi = df_posisi.loc[0]
             df_posisi = df_posisi.rename(columns={1 : "Jabatan"})
             df_posisi = df_posisi[["Jabatan"]].reset_index(drop=True)
             df = pd.merge(df_nama, df_posisi, left_index=True, right_index=True)
-            
             if df.shape[0] > 5:
                 df.to_csv("./scrapping/result/dprd_tk1/dprd_kalteng.csv", index=False)
                 self.success_list.append("get_kalteng success..\n")
@@ -804,7 +767,6 @@ class get_dpr_tk1():
                 self.failed_list.append("get_kalteng failed..\n\n")
         except Exception as e:
             self.error_desc.append(e)
-            #self.failed_list.append("\n")
             self.failed_list.append("get_kalteng failed..\n\n")
 
 
@@ -817,12 +779,10 @@ class get_dpr_tk1():
                 spans = soup.find_all('div', {"class":"entry-content clearfix"})
                 for x in spans[0].find_all('a', href=True):
                     list_link.append(x['href']) 
-
             list_nama = []
             list_tempat = []
             list_tanggal = []
             list_failed = []
-
             for idx in tqdm(range(len(list_link))):
                 url = list_link[idx]
                 nama = url.split("/")[-2]   
@@ -832,7 +792,6 @@ class get_dpr_tk1():
                     split_coma = df_sample[1][0].split(",")
                     tempat_lahir = split_coma[0]
                     tangal_lahir = split_coma[1].split(" ")[1]
-
                     list_nama.append(nama)
                     list_tempat.append(tempat_lahir)
                     list_tanggal.append(tangal_lahir)
@@ -848,13 +807,12 @@ class get_dpr_tk1():
                         nama = url.split("/")[-2]  
                     nama = nama.replace("-", " ")
                     tempat, tanggal = self.get_failed_kalsel(url)
-
                     list_nama.append(nama)
                     list_tempat.append(tempat_lahir)
                     list_tanggal.append(tangal_lahir)
                 except:
                     failed_again.append(url)
-            df = pd.DataFrame.from_dict({"nama": list_nama,
+            df = pd.DataFrame.from_dict({"Nama": list_nama,
                             "tempat lahir": list_tempat,
                             "tanggal lahir": list_tanggal})
             if df.shape[0] > 5:
@@ -866,7 +824,6 @@ class get_dpr_tk1():
                 self.failed_list.append("get_kalsel failed..\n\n")
         except Exception as e:
             self.error_desc.append(e)
-            #self.failed_list.append("\n")
             self.failed_list.append("get_kalsel failed..\n\n")
 
 
@@ -889,8 +846,7 @@ class get_dpr_tk1():
                 lahir = spans[0].text
                 list_nama.append(nama)
                 list_lahir.append(lahir)
-
-            df = pd.DataFrame.from_dict({"nama" : list_nama,
+            df = pd.DataFrame.from_dict({"Nama" : list_nama,
                             "lahir" : list_lahir})
             if df.shape[0] > 5:
                 df.to_csv("./scrapping/result/dprd_tk1/dprd_kaltim.csv", index=False)
@@ -901,7 +857,6 @@ class get_dpr_tk1():
                 self.failed_list.append("get_kaltim failed..\n\n")
         except Exception as e:
             self.error_desc.append(e)
-            #self.failed_list.append("\n")
             self.failed_list.append("get_kaltim failed..\n\n")
 
 
@@ -909,6 +864,7 @@ class get_dpr_tk1():
         print("kalimantan utara....\n")
         try:
             df = pd.read_html(self.url_kalut)[6]
+            df = df.rename(columns={"Nama Anggota":"Nama"})
             if df.shape[0] > 5:
                 df.to_csv("./scrapping/result/dprd_tk1/dprd_kalut.csv", index=False)
                 self.success_list.append("get_kalut success..\n")
@@ -918,7 +874,6 @@ class get_dpr_tk1():
                 self.failed_list.append("get_kalut failed..\n\n")
         except Exception as e:
             self.error_desc.append(e)
-            #self.failed_list.append("\n")
             self.failed_list.append("get_kalut failed..\n\n")
 
 
@@ -928,7 +883,6 @@ class get_dpr_tk1():
             Base_url = "https://dprd-dkijakartaprov.go.id"
             urls = [self.url_jakarta1, self.url_jakarta2, self.url_jakarta3, self.url_jakarta4, self.url_jakarta5, 
                     self.url_jakarta6, self.url_jakarta7, self.url_jakarta8, self.url_jakarta9]
-
             list_link = []
             for url in urls:
                 soup = self.get_data(url)
@@ -944,7 +898,6 @@ class get_dpr_tk1():
             list_link = list(set(list_link))
             list_nama = []
             list_lahir = []
-
             for idx in tqdm(range(len(list_link))):
                 url = list_link[idx]
                 nama = url.split("/")[-2].replace("-", " ")
@@ -954,7 +907,7 @@ class get_dpr_tk1():
                     lahir = span.find_all('p')[0].text.split("\n")[0].replace("\xa0", "")                
                 list_nama.append(nama)
                 list_lahir.append(lahir)
-            df = pd.DataFrame.from_dict({"nama" : list_nama,
+            df = pd.DataFrame.from_dict({"Nama" : list_nama,
                             "list_lahir" : list_lahir})
             if df.shape[0] > 5:
                 df.to_csv("./scrapping/result/dprd_tk1/dprd_jakarta.csv", index=False)
@@ -965,7 +918,6 @@ class get_dpr_tk1():
                 self.failed_list.append("get_jakarta failed..\n\n")
         except Exception as e:
             self.error_desc.append(e)
-            #self.failed_list.append("\n")
             self.failed_list.append("get_jakarta failed..\n\n")
 
 
@@ -982,7 +934,6 @@ class get_dpr_tk1():
                 self.failed_list.append("get_banten failed..\n\n")
         except Exception as e:
             self.error_desc.append(e)
-            #self.failed_list.append("\n")
             self.failed_list.append("get_banten failed..\n\n")
 
 
@@ -995,23 +946,20 @@ class get_dpr_tk1():
             spans = soup.find_all('a', {"class":"d-inline-block text-center link-dark"}, href=True)
             for span in spans:
                 list_link.append(span['href'])
-
             nama_list = []
             nama_tempat = []
             nama_tanggal = []
             nama_alamat = []
-
             for urlx in tqdm(list_link):
                 soup = self.get_data(urlx)
                 temp_list = []
                 for span in soup.find_all("div", {"class":"fw-300"}):
                     temp_list.append(span.string)
-                
                 nama_list.append(urlx.split("/")[-1].replace("-", " "))
                 nama_tempat.append(temp_list[0])
                 nama_tanggal.append(temp_list[1])
                 nama_alamat.append(temp_list[2])
-            df = pd.DataFrame.from_dict({"nama" : nama_list,
+            df = pd.DataFrame.from_dict({"Nama" : nama_list,
                              "tempat lahir" : nama_tempat,
                              "tanggal lahir" : nama_tanggal,
                              "alamat" : nama_alamat})
@@ -1024,7 +972,6 @@ class get_dpr_tk1():
                 self.failed_list.append("get_jabar failed..\n\n")
         except Exception as e:
             self.error_desc.append(e)
-            #self.failed_list.append("\n")
             self.failed_list.append("get_jabar failed..\n\n")
 
 
@@ -1053,7 +1000,6 @@ class get_dpr_tk1():
                 self.failed_list.append("get_jateng failed..\n\n")
         except Exception as e:
             self.error_desc.append(e)
-            #self.failed_list.append("\n")
             self.failed_list.append("get_jateng failed..\n\n")
 
 
@@ -1077,7 +1023,6 @@ class get_dpr_tk1():
                 self.failed_list.append("get_yogya failed..\n\n")
         except Exception as e:
             self.error_desc.append(e)
-            #self.failed_list.append("\n")
             self.failed_list.append("get_yogya failed..\n\n")
 
 
@@ -1100,7 +1045,6 @@ class get_dpr_tk1():
                 self.failed_list.append("get_jatim failed..\n\n")
         except Exception as e:
             self.error_desc.append(e)
-            #self.failed_list.append("\n")
             self.failed_list.append("get_jatim failed..\n\n")
 
 
